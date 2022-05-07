@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Task master</title>
+    <title>Task master</title>
 {% endblock %}
 
 {% block body %}
 <div>
-    <h1>Task Master</h1>
+
+    <h1>Login Flask System</h1>
+    <a href="{{url_for('login')}}">Login</a><br>
+    <a href="{{url_for('signup')}}">Sign Up</a>
+    <!-- <h1>Task Master</h1>
 
     <table>
         <tr>
@@ -27,6 +31,6 @@
     <form action="/" method="POST">
         <input type="text" name="content" id="content">
         <input type="submit" value="Add Task">
-    </form>
+    </form> -->
 </div>
 {% endblock %}

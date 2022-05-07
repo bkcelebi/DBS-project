@@ -41,15 +41,15 @@ class SignUpFrom(FlaskForm):
     email = EmailField(validators=[InputRequired(), Length(
         min=5, max=50)], render_kw={"placeholder": "Email"})
     password = PasswordField(validators=[InputRequired(), Length(
-        min=5, max=20)], render_kw={"placeholder":"Password"})
+        min=5, max=20)], render_kw={"placeholder": "Password"})
     username = StringField(validators=[InputRequired(), Length(
-        min=5, max=20)], render_kw={"placeholder","username"})
+        min=5, max=20)], render_kw={"placeholder": "username"})
     age = IntegerField(validators=[InputRequired(), Length(
-        min=2, max=2)], render_kw={"placeholder", "age"})
+        min=2, max=2)], render_kw={"placeholder": "age"})
     gender = StringField(validators=[InputRequired(), Length(
-        min=4, max=30)], render_kw={"placeholder","gender"})
+        min=4, max=30)], render_kw={"placeholder": "gender"})
     location = StringField(validators=[InputRequired(), Length(
-        min=4, max=50)], render_kw={"placeholder","location"})
+        min=4, max=50)], render_kw={"placeholder": "location"})
     
     submit = SubmitField("Register")
 

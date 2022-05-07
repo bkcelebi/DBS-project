@@ -123,7 +123,7 @@ def logout():
 
 
 @app.route('/ads', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def ads():
     return render_template('ads.html')
 

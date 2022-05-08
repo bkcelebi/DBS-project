@@ -15,24 +15,32 @@
               <span class="navbar-toggler-icon"></span>
             </button>
           
-            <div class="collapse navbar-collapse" method="POST" action="/login">
-                {% if user.is_authenticated %}
-                <li>
-                    <a class="btn btn-success" href="#">{{user.username}}</a>
-                    <a class="btn btn-success" href="{{url_for('logout')}}"></a>
-                </li>    
-                {% else %}
-                <form class="form-inline my-2 my-lg-0">
-                <!-- <input class="form-control mr-sm-2" type="email" placeholder="Search" >
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
-                    {{ form.hidden_tag() }}
-                    {{ form.email }}
-                    {{ form.password }}
-                    {{ form.submit }}
-                </form>
-                {% endif %}
+            <div class="collapse navbar-collapse" method="POST" action="">
+                <ul class="navbar-nav ml-auto">
+                    {% if current_user.is_authenticated %}
+
+                    <li>
+                        <a class="btn btn-success" href="#">{{current_user.username}}</a>
+                        <a class="btn btn-success" href="{{url_for('logout')}}">logout</a>
+                    </li>   
+
+                    {% else %}
+
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        {{ form.email }}
+                        {{ form.password }}
+                        {{ form.submit }}
+                    </form>
+
+                    <a class="btn btn-outline-light btn-sm" href="{{url_for('signup')}}">Sign Up</a>
+
+                    {% endif %}
+                </ul>
+
             </div>
           </nav>
+
         {% block body %}{% endblock %}
     </body>
 </html>

@@ -47,7 +47,7 @@ class User(db.Model, UserMixin):
     location = db.Column(db.String(50), nullable=False)
 
 #creating the signup form
-class SignUpFrom(FlaskForm):
+class SignUpForm(FlaskForm):
     email = EmailField(validators=[InputRequired(), Length(
         min=5, max=50)], render_kw={"placeholder": "Email"})
     password = PasswordField(validators=[InputRequired(), Length(
@@ -73,7 +73,7 @@ class SignUpFrom(FlaskForm):
             #flash("This email already exists.")
 
 #creating the login form
-class LoginFrom(FlaskForm):
+class LoginForm(FlaskForm):
     email = EmailField(validators=[InputRequired(), Length(
         min=5, max=50)], render_kw={"placeholder": "Email"})
     password = PasswordField(validators=[InputRequired(), Length(
@@ -85,11 +85,12 @@ class LoginFrom(FlaskForm):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    form = LoginForm()
+    return render_template('index.html', form=form)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    form = SignUpFrom()
+    form = SignUpForm()
 
     #have a look at location to upgrade it
     if form.validate_on_submit():
@@ -105,7 +106,7 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginFrom()
+    form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:

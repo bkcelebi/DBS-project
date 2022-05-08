@@ -21,12 +21,12 @@
 
                     <li>
                         <a class="btn btn-success" href="#">{{current_user.username}}</a>
-                        <a class="btn btn-success" href="{{url_for('logout')}}">logout</a>
+                        <a class="btn btn-outline-secondary" href="{{url_for('logout')}}">logout</a>
                     </li>   
 
                     {% else %}
 
-                    <form class="form-inline my-2 my-lg-0" method="POST" action="">
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="/login">
                         {{ form.hidden_tag() }}
                         {{ form.email }}
                         {{ form.password }}

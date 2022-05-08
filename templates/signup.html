@@ -5,9 +5,15 @@
 {% endblock %}
 
 {% block body %}
+
+    {% if current_user.is_authenticated %}
+    
+    <h1>Hi {{ current_user.username }}! You are already registered!</h1>
+
+    {% else %}
     <h1>Sign Up!</h1>
 
-    <form method="POST" action="">
+    <form method="POST" action="/signup">
         {{ form.hidden_tag() }}
         {{ form.email }}
         {{ form.username }}
@@ -19,4 +25,7 @@
     </form>
 
     <a href="{{url_for('login')}}">Already have an account? Login!</a>
+
+    {% endif %}
+
 {% endblock %}

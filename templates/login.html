@@ -7,10 +7,11 @@
 {% block body %}
 
     {% if current_user.is_authenticated %}
-        Hi {{ current_user.username }}
+        <h1>Hi {{ current_user.username }}! You are already logged in</h1>
+
     {% else %}
     <h1>Login</h1>
-        <form method="POST" action="">
+        <form method="POST" action="/login">
             {{ form.hidden_tag() }}
             {{ form.email }}
             {{ form.password }}

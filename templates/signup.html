@@ -11,20 +11,22 @@
     <h1>Hi {{ current_user.username }}! You are already registered!</h1>
 
     {% else %}
-    <h1>Sign Up!</h1>
+    <br><br>
+    <h1 class="d-flex justify-content-md-center align-items-center">Sign Up!</h1>
+    <div class="d-flex justify-content-md-center align-items-center">
+        <form method="POST" action="/signup">
+            {{ form.hidden_tag() }}<br>
+            {{ form.email }}<br><br>
+            {{ form.username }}<br><br>
+            {{ form.password }}<br><br>
+            {{ form.age }}<br><br>
+            {{ form.gender }}<br><br>
+            {{ form.location }}<br><br>
+            {{ form.submit }}<br><br>
+        </form>
+    </div>
 
-    <form method="POST" action="/signup">
-        {{ form.hidden_tag() }}
-        {{ form.email }}
-        {{ form.username }}
-        {{ form.password }}
-        {{ form.age }}
-        {{ form.gender }}
-        {{ form.location }}
-        {{ form.submit }}
-    </form>
-
-    <a href="{{url_for('login')}}">Already have an account? Login!</a>
+    <a class="d-flex justify-content-md-center align-items-center" href="{{url_for('login')}}">Already have an account? Login!</a>
 
     {% endif %}
 

@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, SubmitField, EmailField, StringField, IntegerField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
-# from datetime import datetime
+
 
 #creating the app and database
 #creating bcrypt to hash the password
@@ -25,16 +25,6 @@ login_manager.login_view = "login"
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
-
-# class Todo(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     content = db.Column(db.String(200), nullable=False)
-#     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
-#     def __repr__(self):
-#         return '<task %r>' % self.id
 
 #creating user table in the database
 class User(db.Model, UserMixin):

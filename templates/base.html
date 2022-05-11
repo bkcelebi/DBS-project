@@ -20,20 +20,22 @@
                     {% if current_user.is_authenticated %}
 
                     <li>
-                        <a class="btn btn-success" href="#">{{current_user.username}}</a>
+                        <a class="btn btn-success" href="#">{{current_user.first_name}}</a>
                         <a class="btn btn-outline-secondary" href="{{url_for('logout')}}">logout</a>
                     </li>   
 
                     {% else %}
-
-                    <form class="form-inline my-2 my-lg-0" method="POST" action="/login">
-                        {{ form.hidden_tag() }}
-                        {{ form.email }}
-                        {{ form.password }}
-                        {{ form.submit }}
-                    </form>
-
-                    <a class="btn btn-outline-light btn-sm" href="{{url_for('signup')}}">Sign Up</a>
+                    
+                    <li>
+                        <form class="form-inline" action="/login" method="POST">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Email" name="mail">
+                                <input type="password" class="form-control" placeholder="Password" name="pwd">
+                                <input class="btn btn-success" type="submit" value="Login">
+                                <a class="btn btn-outline-success" href="{{url_for('signup')}}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
 
                     {% endif %}
                 </ul>

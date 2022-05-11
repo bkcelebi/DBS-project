@@ -1,12 +1,10 @@
-import email
 import bcrypt
-from flask import Flask, render_template, url_for, redirect, flash
+from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from flask_wtf import FlaskForm
-from wtforms import PasswordField, SubmitField, EmailField, StringField, IntegerField
-from wtforms.validators import InputRequired, Length, ValidationError
+# from requests import request
 from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 
 #creating the app and database
@@ -27,83 +25,98 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 #creating user table in the database
+#and creating posts attribute to link
+#the child table with the parent
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), nullable=False, unique=True)
-    username = db.Column(db.String(20), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(80), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(30), nullable=False)
     location = db.Column(db.String(50), nullable=False)
+    posts = db.relationship('Post', backref='user')
 
-#creating the signup form
-class SignUpForm(FlaskForm):
-    email = EmailField(validators=[InputRequired(), Length(
-        min=5, max=50)], render_kw={"placeholder": "Email"})
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=5, max=20)], render_kw={"placeholder": "Password"})
-    username = StringField(validators=[InputRequired(), Length(
-        min=5, max=20)], render_kw={"placeholder": "username"})
-    age = IntegerField(validators=[InputRequired()],
-        render_kw={"placeholder": "age"})
-    gender = StringField(validators=[InputRequired(), Length(
-        min=4, max=30)], render_kw={"placeholder": "gender"})
-    location = StringField(validators=[InputRequired(), Length(
-        min=4, max=50)], render_kw={"placeholder": "location"})
-    
-    submit = SubmitField("Register")
+    #creating this representative function 
+    #if there is an error i will be able to
+    #see the user the error coming from
+    def __repr__(self):
+        return f'<User {self.id}>'
 
-    #validating the email to make sure that one email has
-    #only one account
-    def validate_email(self, email):
-        existing_email = User.query.filter_by(
-            email=email.data).first()
-        if existing_email:
-            raise ValidationError("This email already exists.")
-            #flash("This email already exists.")
+#creating post table in the database
+#and creating the user_id to link this table
+#with the parent
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(400), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-#creating the login form
-class LoginForm(FlaskForm):
-    email = EmailField(validators=[InputRequired(), Length(
-        min=5, max=50)], render_kw={"placeholder": "Email"})
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=5, max=20)], render_kw={"placeholder":"Password"})
-    submit = SubmitField("Login")
-
-
+    #creating this representative function 
+    #if there is an error i will be able to
+    #see the post the error coming from
+    def __repr__(self):
+        return f'<Post {self.id}>'
 
 
 @app.route('/')
 def index():
-    form = LoginForm()
-    return render_template('index.html', form=form)
+
+    return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    form = SignUpForm()
 
-    #have a look at location to upgrade it
-    if form.validate_on_submit():
-        hashed_pw = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(email=form.email.data, password=hashed_pw,
-        username=form.username.data, age=form.age.data, 
-        gender=form.gender.data, location=form.location.data)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('index'))
+    if request.method == 'POST':
+        first_name = request.form['fname']
+        last_name = request.form['lname']
+        email = request.form['mail']
+        password = request.form['pwd']
+        age = request.form['age']
+        gender = request.form['gender']
+        location = request.form['location']
 
-    return render_template('signup.html', form=form)
+        hashed_pw = bcrypt.generate_password_hash(password)
+
+        new_user = User(email=email, first_name=first_name, 
+        password = hashed_pw ,last_name=last_name, age=age, 
+        gender=gender, location=location)
+
+        def validate_email(self, email):
+            existing_email = User.query.filter_by(
+                email=email).first()
+            if existing_email:
+                raise flash("This email already exists.")
+                #flash("This email already exists.")
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('index'))
+        except:
+            return 'Something went wrong'
+            
+    else:
+        return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+
+    if request.method == 'POST':
+        email = request.form['mail']
+        password = request.form['pwd']
+        user = User.query.filter_by(email=email).first()
         if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
+            if bcrypt.check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for('ads'))
-    return render_template('login.html', form=form)
+        else:
+            raise flash("This email already exists.")
+
+    else:
+        return render_template('login.html')
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -117,6 +130,15 @@ def logout():
 # @login_required
 def ads():
     return render_template('ads.html')
+
+
+@app.route('/post', methods=['GET', 'POST'])
+@login_required
+def post():
+    if request.method == 'POST':
+        pass
+    else:
+        return render_template('post.html')
 
 
 if __name__ == "__main__":

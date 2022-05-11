@@ -7,8 +7,18 @@
 {% block body %}
 
     {% if current_user.is_authenticated %}
-        <h1>Hi {{ current_user.username }}! You are already logged in</h1>
+        <h1>Hi {{ current_user.first_name }}! You are already logged in</h1>
     
+    {% else %}
+
+        <form action="/login" method="POST">
+            <label for="mail">Email</label>
+            <input type="email" id="mail" name="mail">
+            <label for="pwd">Password</label>
+            <input type="password" id="pwd" name="pwd">
+            <input type="submit" value="Submit">
+        </form>
+
     {% endif%}
     
 {% endblock %}

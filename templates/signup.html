@@ -8,21 +8,58 @@
 
     {% if current_user.is_authenticated %}
     
-    <h1>Hi {{ current_user.username }}! You are already registered!</h1>
+    <h1>Hi {{ current_user.first_name }}! You are already registered!</h1>
 
     {% else %}
-    <br><br>
-    <h1 class="d-flex justify-content-md-center align-items-center">Sign Up!</h1>
-    <div class="d-flex justify-content-md-center align-items-center">
-        <form method="POST" action="/signup">
-            {{ form.hidden_tag() }}<br>
-            {{ form.email }}<br><br>
-            {{ form.username }}<br><br>
-            {{ form.password }}<br><br>
-            {{ form.age }}<br><br>
-            {{ form.gender }}<br><br>
-            {{ form.location }}<br><br>
-            {{ form.submit }}<br><br>
+
+    <div class="container">
+        <br>
+        <h1 class="d-flex justify-content-md-center align-items-center">Welcome to DB</h1>
+        <br>
+        <form action="/signup" method="POST">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="fname">First Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="fname" name="fname">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="lname">Last Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="lname" name="lname">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="mail">Email</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="email" id="mail" name="mail">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="pwd">Password</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="password" id="pwd" name="pwd">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="age">Age</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" id="age" name="age">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="gender">Gender</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="gender" name="gender">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="location">Location</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="location" name="location">
+                </div>
+            </div>
+            <input type="submit" value="Register"></input>
         </form>
     </div>
 

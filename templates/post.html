@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Create Post</title>
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+
+        <table>
+            <tr>
+                <th>Task</th>
+                <th>Added</th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="/delete">Delete</a><br>
+                    <a href="/update">Update</a>
+                </td>
+            </tr>
+        </table>
+
+        <form action="/post" method="POST">
+            <label></label>
+            <input type="text">
+        </form>
+
+    {% else %}
+        <h3>You need to log in to create a post</h3>
+    {% endif %}
+{% endblock %}

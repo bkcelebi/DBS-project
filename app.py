@@ -83,13 +83,12 @@ def signup():
         new_user = User(email=email, first_name=first_name, 
         password = hashed_pw ,last_name=last_name, age=age, 
         gender=gender, location=location)
-
-        def validate_email(self, email):
-            existing_email = User.query.filter_by(
+     
+        existing_email = User.query.filter_by(
                 email=email).first()
-            if existing_email:
-                raise flash("This email already exists.")
-                #flash("This email already exists.")
+        if existing_email:
+            flash("This email already exists.")
+
 
         try:
             db.session.add(new_user)

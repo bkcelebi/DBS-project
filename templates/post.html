@@ -7,27 +7,37 @@
 {% block body %}
 
     {% if current_user.is_authenticated %}
-
-        <table>
-            <tr>
-                <th>Task</th>
-                <th>Added</th>
-                <th>Actions</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="/delete">Delete</a><br>
-                    <a href="/update">Update</a>
-                </td>
-            </tr>
+    <br>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Task</th>
+                    <th scope="col">Added</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row"></td>
+                    <td scope="row"></td>
+                    <td scope="row">
+                        <a href="/delete">Delete</a><br>
+                        <a href="/update">Update</a>
+                    </td>
+                </tr>
+            </tbody>          
         </table>
-
+    </div><br><br><br>
+    <div class="d-flex justify-content-md-center align-items-center">
         <form action="/post" method="POST">
-            <label></label>
-            <input type="text">
+            <label for="content">Create a post</label><br>
+            <textarea id="content" name="content" rows="5" cols="50"></textarea><br>
+            <input type="submit" value="Send">
         </form>
+    </div>
+        
+      
 
     {% else %}
         <h3>You need to log in to create a post</h3>

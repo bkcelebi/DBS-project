@@ -23,8 +23,8 @@
                         <td scope="row">{{ post.content }}</td>
                         <td scope="row">{{ post.date_created.date() }}</td>
                         <td scope="row">
-                            <a href="/delete">Delete</a><br>
-                            <a href="/update">Update</a>
+                            <a class="btn btn-danger" href="/delete">Delete</a>
+                            <a class="btn btn-warning" href="/update">Update</a>
                         </td>
                     </tr>
                 </tbody>
@@ -35,7 +35,7 @@
         <form action="/post" method="POST">
             <label for="content">Create a post</label><br>
             <textarea id="content" name="content" rows="5" cols="50"></textarea><br>
-            <input type="submit" value="Send">
+            <input class="btn btn-success" type="submit" value="Send">
         </form>
     </div>
         

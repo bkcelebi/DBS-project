@@ -7,8 +7,9 @@
 {% block body %}
 
     {% if current_user.is_authenticated %}
-        <h1>Adverts</h1>
-
+    <br>
+        <h1 class="d-flex justify-content-md-center align-items-center">Adverts</h1>
+    <br>
         <div class="container">
             <table class="table table-striped">
                 <thead>
@@ -31,13 +32,13 @@
                     </tbody>
                 {% endfor %}          
             </table>
+
+            <a class="btn btn-primary" href="{{url_for('post')}}">Create a post</a>
+
         </div>  
 
-        <div class="position-relative">
-            <div class="position-absolute bottom-0 end-0">
-                <a href="{{url_for('post')}}">Create a post</a>
-            </div>
-        </div>
+
+        
 
         
     {% else %}

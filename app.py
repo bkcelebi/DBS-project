@@ -63,7 +63,6 @@ class Post(db.Model):
 
 @app.route('/')
 def index():
-
     return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -89,16 +88,17 @@ def signup():
         if existing_email:
             flash("This email already exists.")
 
-
         try:
             db.session.add(new_user)
             db.session.commit()
             return redirect(url_for('index'))
+
         except:
             return 'Something went wrong'
             
     else:
         return render_template('signup.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -107,15 +107,18 @@ def login():
         email = request.form['mail']
         password = request.form['pwd']
         user = User.query.filter_by(email=email).first()
+        
         if user:
             if bcrypt.check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for('ads'))
+
         else:
             raise flash("This email already exists.")
 
     else:
         return render_template('login.html')
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -124,20 +127,34 @@ def logout():
     return redirect(url_for('index'))
 
 
-
 @app.route('/ads', methods=['GET', 'POST'])
 # @login_required
 def ads():
-    return render_template('ads.html')
+
+    posts = Post.query.order_by(Post.date_created).all()
+    return render_template('ads.html', posts=posts)
+
 
 
 @app.route('/post', methods=['GET', 'POST'])
 @login_required
 def post():
+
     if request.method == 'POST':
-        pass
+        content = request.form['content']
+        new_post = Post(content=content)
+
+        try:
+            db.session.add(new_post)
+            db.session.commit()
+            return redirect('ads')
+        
+        except:
+            return 'Something went wrong'
+
     else:
-        return render_template('post.html')
+        posts = Post.query.order_by(Post.date_created).all()
+        return render_template('post.html', posts=posts)
 
 
 if __name__ == "__main__":

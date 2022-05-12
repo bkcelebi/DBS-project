@@ -5,7 +5,70 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Adverts</h1>
-    <a href="{{url_for('logout')}}">Logout</a><br>
-    <a href="{{url_for('post')}}">Create a post</a>
+
+    {% if current_user.is_authenticated %}
+        <h1>Adverts</h1>
+
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Added</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                {% for post in posts %}
+                    <tbody>
+                        <tr>
+                            <td scope="row">{{ post.content }}</td>
+                            <td scope="row">{{ post.date_created.date() }}</td>
+                            <td scope="row">
+                                <a href="/delete">Delete</a><br>
+                                <a href="/update">Update</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endfor %}          
+            </table>
+        </div>  
+
+        <div class="position-relative">
+            <div class="position-absolute bottom-0 end-0">
+                <a href="{{url_for('post')}}">Create a post</a>
+            </div>
+        </div>
+
+        
+    {% else %}
+        <h1>Adverts</h1>
+        <a href="{{url_for('post')}}">Create a post</a>
+
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Added</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                {% for post in posts %}
+                    <tbody>
+                        <tr>
+                            <td scope="row">{{ post.content }}</td>
+                            <td scope="row">{{ post.date_created.date() }}</td>
+                            <td scope="row">
+                                <a href="/delete">Delete</a><br>
+                                <a href="/update">Update</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endfor %}          
+            </table>
+        </div>
+
+    {% endif %}
+    
+    
 {% endblock %}

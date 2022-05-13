@@ -37,7 +37,7 @@ class User(db.Model, UserMixin):
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(30), nullable=False)
     location = db.Column(db.String(50), nullable=False)
-    posts = db.relationship('Post', backref='user')
+    posts = db.relationship('Post')
 
     #creating this representative function 
     #if there is an error i will be able to
@@ -132,17 +132,26 @@ def logout():
 def ads():
 
     posts = Post.query.order_by(Post.date_created).all()
-    return render_template('ads.html', posts=posts)
+    return render_template(
+        'ads.html', 
+        posts=posts,
+        current_user=current_user)
 
 
 
 @app.route('/post', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def post():
 
     if request.method == 'POST':
         content = request.form['content']
-        new_post = Post(content=content)
+
+        # if len(content) < 1:
+        #     flash("Note is too short!")
+        # else:
+        new_post = Post(
+            content=content, 
+            user_id=current_user.id)
 
         try:
             db.session.add(new_post)
@@ -153,8 +162,7 @@ def post():
             return 'Something went wrong'
 
     else:
-        posts = Post.query.order_by(Post.date_created).all()
-        return render_template('post.html', posts=posts)
+        return render_template('post.html', user=current_user)
 
 
 if __name__ == "__main__":

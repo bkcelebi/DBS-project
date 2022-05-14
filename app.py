@@ -135,13 +135,13 @@ def ads():
     return render_template(
         'ads.html', 
         posts=posts,
-        current_user=current_user)
+        user_name=current_user)
 
 
 
-@app.route('/post', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET', 'POST'])
 # @login_required
-def post():
+def profile():
 
     if request.method == 'POST':
         content = request.form['content']
@@ -162,7 +162,7 @@ def post():
             return 'Something went wrong'
 
     else:
-        return render_template('post.html', user=current_user)
+        return render_template('profile.html', user=current_user)
 
 
 if __name__ == "__main__":

@@ -7,13 +7,31 @@
 {% block body %}
 <div>
 
+
     {% if current_user.is_authenticated %}
-    <a class="btn btn-primary" href="{{url_for('ads')}}">Search</a>
+
+        <div class="card bg-dark text-dark">
+            <img src="https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" class="card-img" alt="...">
+            <div style="margin-left: 350px; margin-top:150px;" class="card-img-overlay">
+                <h3 class="card-title">Welcome to DB {{current_user.first_name}}</h3>
+                <p class="card-text"><i>Lets have a look at tasks</i></p>
+                <a class="btn btn-primary" href="{{url_for('ads')}}">Search</a>
+            </div>         
+        </div>
 
     {% else %}
-    <h1>Welcome to DB</h1>
-    <a class="btn btn-primary" href="{{url_for('ads')}}">Ads</a>
+
+        <div class="card bg-dark text-dark">
+            <img src="https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" class="card-img" alt="...">
+            <div style="margin-left: 350px; margin-top:150px;" class="card-img-overlay">
+                <h3 class="card-title">Welcome to DB</h3>
+                <p class="card-text"><i>Let's have a look at tasks</i></p>
+                <a class="btn btn-outline-dark" href="{{url_for('ads')}}">Search</a>
+            </div>         
+         </div>
 
     {% endif %}
+
+
 </div>
 {% endblock %}

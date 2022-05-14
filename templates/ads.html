@@ -10,34 +10,37 @@
     <br>
         <h1 class="d-flex justify-content-md-center align-items-center">Adverts</h1>
     <br>
-        <div class="container">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Task</th>
-                        <th scope="col">Added</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                {% for post in posts %}
-                    <tbody>
+        {% if posts|length < 1 %}
+            <h1>There is no post yet</h1> 
+            <a class="btn btn-primary" href="{{url_for('profile')}}">Create a post</a>
+            
+        {% else %}
+            <div class="container">
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td scope="row">{{ post.content }}</td>
-                            <td scope="row">{{ post.date_created.date() }}</td>
-                            <td scope="row">
-                                <a href="/delete">Delete</a><br>
-                                <a href="/update">Update</a>
-                            </td>
+                            <th scope="col">Task</th>
+                            <th scope="col">Added</th>
+                            <th scope="col">Owner</th>
                         </tr>
-                    </tbody>
-                {% endfor %}          
-            </table>
+                    </thead>
+                    {% for post in posts %}
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{ post.content }}</td>
+                                <td scope="row">{{ post.date_created.date() }}</td>
+                                <td scope="row"></td>       
+                                </td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}          
+                </table>
 
-            <a class="btn btn-primary" href="{{url_for('post')}}">Create a post</a>
+                <a class="btn btn-primary" href="{{url_for('profile')}}">Create a post</a>
 
-        </div>  
-
-
+            </div>
+            
+        {% endif %}
         
 
         
@@ -52,7 +55,7 @@
                     <tr>
                         <th scope="col">Task</th>
                         <th scope="col">Added</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">Owner</th>
                     </tr>
                 </thead>
                 {% for post in posts %}
@@ -60,9 +63,7 @@
                         <tr>
                             <td scope="row">{{ post.content }}</td>
                             <td scope="row">{{ post.date_created.date() }}</td>
-                            <td scope="row">
-                                <a href="/delete">Delete</a><br>
-                                <a href="/update">Update</a>
+                            <td scope="row"></td>       
                             </td>
                         </tr>
                     </tbody>

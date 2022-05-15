@@ -1,4 +1,3 @@
-import bcrypt
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -185,20 +184,19 @@ def profile():
     if request.method == 'POST':
         content = request.form['content']
 
-        # if len(content) < 1:
-        #     flash("Note is too short!")
-        # else:
-        new_post = Post(
-            content=content, 
-            user_id=current_user.id)
-
-        try:
+        if len(content) < 1:
+            flash("Note is too short!", category='error')
+            
+        else:
+            new_post = Post(
+                content=content, 
+                user_id=current_user.id)
+        
             db.session.add(new_post)
             db.session.commit()
             return redirect('ads')
         
-        except:
-            return 'Something went wrong'
+        return redirect(url_for('profile'))
 
     else:
         return render_template('profile.html', user=current_user)

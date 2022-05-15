@@ -135,17 +135,17 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if email == '':
-            flash('Email cannot be left blank', category='error')
+            flash('Please enter your Email', category='error')
         elif password == '':
-            flash('Password cannot be left blank', category='error')
+            flash('Please enter your Password', category='error')
         else:
             if user:
                 if bcrypt.check_password_hash(user.password, password):
                     login_user(user)
                     flash('Successfully logged in', category='success')
-                    return redirect(url_for('ads'))
+                    return redirect(url_for('profile'))
                 else:
-                    flash('Email or Password does not match', category='error')
+                    flash('Incorrect Email or Password', category='error')
                     return redirect(url_for('login'))
 
             else:
@@ -185,7 +185,7 @@ def profile():
         content = request.form['content']
 
         if len(content) < 1:
-            flash("Note is too short!", category='error')
+            flash("Task too short!", category='error')
             
         else:
             new_post = Post(
@@ -194,6 +194,7 @@ def profile():
         
             db.session.add(new_post)
             db.session.commit()
+            flash("Task created successfully", category='success')
             return redirect('ads')
         
         return redirect(url_for('profile'))

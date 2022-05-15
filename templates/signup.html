@@ -65,11 +65,11 @@
                     <input class="form-control" type="text" id="location" name="location">
                 </div>
             </div>
-            <input type="submit" value="Register"></input>
+            <input class="btn btn-primary" type="submit" value="Register"></input>
         </form>
     </div>
 
-    <a class="d-flex justify-content-md-center align-items-center" href="{{url_for('login')}}">Already have an account? Login!</a>
+    <span class="d-flex justify-content-md-center align-items-center">Already have an account? <a style="margin-left: 5px;" href="{{url_for('login')}}"> Log in!</a></span>
 
     {% endif %}
 

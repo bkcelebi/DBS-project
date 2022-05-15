@@ -23,8 +23,8 @@
                         <td scope="row">{{ post.content }}</td>
                         <td scope="row">{{ post.date_created.date() }}</td>
                         <td scope="row">
-                            <a href="/delete">Delete</a><br>
-                            <a href="/update">Update</a>
+                            <a href="/delete/{{post.id}}">Delete</a><br>
+                            <a href="/update/{{post.id}}">Update</a>
                         </td>
                     </tr>
                 </tbody>

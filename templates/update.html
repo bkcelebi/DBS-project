@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Update</title>
+    {% if current_user.is_anonymous %}
+        <meta http-equiv="REFRESH" content="4; login">
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if current_user.is_authenticated %}
+
+        <div class="container">
+            <div class="form">
+                <div class="d-flex justify-content-md-center align-items-center">
+                    <form action="/update/{{posts.id}}" method="POST">
+                        <label style="margin-top: 10%;" for="content">Update Post</label><br>
+                        <input type="text" id="content" name="content" value="{{posts.content}}">
+                        <!-- <textarea id="content" name="content" rows="5" cols="50" value="{{posts.content}}"></textarea><br> -->
+                        <input class="btn btn-success" type="submit" value="Update">
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+    {% else %}
+        <br>
+            <h3 align="center" style="margin-top: 10%;">You are being redirected to log in!</h3>
+        <br>
+
+    {% endif %}
+    
+    
+{% endblock %}

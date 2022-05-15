@@ -5,6 +5,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
+from requests import post
+
 
 #creating the app and database
 #creating bcrypt to hash the password
@@ -200,8 +202,28 @@ def profile():
         return redirect(url_for('profile'))
 
     else:
-        return render_template('profile.html', user=current_user)
+        return render_template(
+            'profile.html', 
+            user=current_user)
 
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    posts = Post.query.get_or_404(id)
+
+    if request.method == 'POST':
+        if len(request.form['content']) > 0:
+            post.content = request.form['content']
+            db.session.commit()
+            flash('Post edited', category='success')
+            return redirect(url_for('profile'))
+        else:
+            flash('Post cannot be blank', category='error')
+            return redirect(url_for('profile'))
+
+    else:
+        return render_template(
+            'update.html', 
+            posts=posts)
 
 if __name__ == "__main__":
     app.run(debug=True)

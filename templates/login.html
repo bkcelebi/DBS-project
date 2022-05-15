@@ -2,12 +2,16 @@
 
 {% block head %}
     <title>Login</title>
+    {% if current_user.is_authenticated %}
+        <meta http-equiv="REFRESH" content="4; profile">
+    {% endif %}
+
 {% endblock %}
 
 {% block body %}
 
     {% if current_user.is_authenticated %}
-        <h1>Hi {{ current_user.first_name }}! You are already logged in</h1>
+        <h3 align="center" style="margin-top: 10%;">Hi {{ current_user.first_name }}! You are being redirected to your profile.</h3>
     
     {% else %}
 

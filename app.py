@@ -73,29 +73,56 @@ def signup():
         last_name = request.form['lname']
         email = request.form['mail']
         password = request.form['pwd']
+        password2 = request.form['pwd2']
         age = request.form['age']
         gender = request.form['gender']
         location = request.form['location']
 
-        hashed_pw = bcrypt.generate_password_hash(password)
+        if len(first_name) > 50:
+            flash('First name must be less than 50 characters.', category='error')
+        elif len(first_name) < 2:
+            flash('First name must be greater than 2 characters.', category='error')
+        elif len(last_name) > 50:
+            flash('Last name must be less than 50 characters.', category='error')
+        elif len(last_name) < 2:
+            flash('Last name must be greater than 2 characters.', category='error')
+        elif len(email) > 50: 
+            flash('Email must be less than 50 characters.', category='error')
+        elif len(email) < 4:
+            flash('Email must be greater than 4 characters.', category='error')
+        elif password != password2:
+            flash('Passwords do NOT match', category='error')
+        elif len(password) < 8:
+            flash('Password must be at least 8 characters', category='error')
+        elif age == "":
+            flash('Age must be filled', category='error')
+        elif gender == "":
+            flash('Gender must be filled', category='error')
+        elif location == "":
+            flash('Location must be filled', category='error')
+        else:
 
-        new_user = User(email=email, first_name=first_name, 
-        password = hashed_pw ,last_name=last_name, age=age, 
-        gender=gender, location=location)
-     
-        existing_email = User.query.filter_by(
-                email=email).first()
-        if existing_email:
-            flash("This email already exists.")
+            existing_email = User.query.filter_by(
+                    email=email).first()
+            if existing_email:
+                flash("This email already exists.", category='error')
+                return redirect(url_for('signup'))
 
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            return redirect(url_for('index'))
+            else:    
+                hashed_pw = bcrypt.generate_password_hash(password)
 
-        except:
-            return 'Something went wrong'
+                new_user = User(email=email, first_name=first_name, 
+                password = hashed_pw ,last_name=last_name, age=age, 
+                gender=gender, location=location)
             
+                db.session.add(new_user)
+                db.session.commit()
+                flash('Account created!', category='success')
+                return redirect(url_for('index'))
+
+        flash('Account not created!', category='error')
+        return redirect(url_for('signup'))
+                    
     else:
         return render_template('signup.html')
 
@@ -107,15 +134,27 @@ def login():
         email = request.form['mail']
         password = request.form['pwd']
         user = User.query.filter_by(email=email).first()
-        
-        if user:
-            if bcrypt.check_password_hash(user.password, password):
-                login_user(user)
-                return redirect(url_for('ads'))
 
+        if email == '':
+            flash('Email cannot be left blank', category='error')
+        elif password == '':
+            flash('Password cannot be left blank', category='error')
         else:
-            raise flash("This email already exists.")
+            if user:
+                if bcrypt.check_password_hash(user.password, password):
+                    login_user(user)
+                    flash('Successfully logged in', category='success')
+                    return redirect(url_for('ads'))
+                else:
+                    flash('Email or Password does not match', category='error')
+                    return redirect(url_for('login'))
 
+            else:
+                flash("This user does not exist", category='error')
+                return redirect(url_for('login'))
+
+        return redirect(url_for('login'))
+        
     else:
         return render_template('login.html')
 

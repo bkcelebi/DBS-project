@@ -208,6 +208,7 @@ def profile():
             user=current_user)
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
     posts = Post.query.get_or_404(id)
 
@@ -234,6 +235,7 @@ def update(id):
 
 
 @app.route('/delete/<int:id>')
+@login_required
 def delete(id):
     posts_to_delete = Post.query.get_or_404(id)
 

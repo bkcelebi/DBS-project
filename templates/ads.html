@@ -19,18 +19,17 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th scope="col">Owner</th>
                             <th scope="col">Task</th>
                             <th scope="col">Added</th>
-                            <th scope="col">Owner</th>
                         </tr>
                     </thead>
                     {% for post in posts %}
                         <tbody>
                             <tr>
+                                <td scope="row">{{ post.user.first_name }}</td>
                                 <td scope="row">{{ post.content }}</td>
-                                <td scope="row">{{ post.date_created.date() }}</td>
-                                <td scope="row"></td>       
-                                </td>
+                                <td scope="row">{{ post.date_created.date() }}</td>                  
                             </tr>
                         </tbody>
                     {% endfor %}          

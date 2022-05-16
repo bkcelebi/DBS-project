@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -38,7 +39,7 @@ class User(db.Model, UserMixin):
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(30), nullable=False)
     location = db.Column(db.String(50), nullable=False)
-    posts = db.relationship('Post')
+    posts = db.relationship('Post', backref='user')
 
     #creating this representative function 
     #if there is an error i will be able to
@@ -171,11 +172,11 @@ def logout():
 # @login_required
 def ads():
 
-    posts = Post.query.order_by(Post.date_created).all()
+    posts = Post.query.order_by(Post.date_created).all() 
     return render_template(
         'ads.html', 
-        posts=posts,
-        user_name=current_user)
+        posts=posts
+        )
 
 
 
@@ -211,11 +212,17 @@ def update(id):
     posts = Post.query.get_or_404(id)
 
     if request.method == 'POST':
-        if len(request.form['content']) > 0:
-            post.content = request.form['content']
+
+        if request.form['content'].strip() == '':
+            flash('Post cannot be blank', category='error')
+            return redirect(url_for('profile'))
+
+        elif len(request.form['content']) > 0:
+            posts.content = request.form['content']
             db.session.commit()
             flash('Post edited', category='success')
             return redirect(url_for('profile'))
+
         else:
             flash('Post cannot be blank', category='error')
             return redirect(url_for('profile'))
@@ -224,6 +231,21 @@ def update(id):
         return render_template(
             'update.html', 
             posts=posts)
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    posts_to_delete = Post.query.get_or_404(id)
+
+    if posts_to_delete:
+        db.session.delete(posts_to_delete)
+        db.session.commit()
+        flash('Post deleted', category='success')
+        return redirect(url_for('profile'))
+
+    else:
+        flash("Post not exist", category='error')
+        return redirect(url_for('profile'))
 
 if __name__ == "__main__":
     app.run(debug=True)

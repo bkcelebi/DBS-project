@@ -15,10 +15,9 @@
             <div class="form">
                 <div class="d-flex justify-content-md-center align-items-center">
                     <form action="/update/{{posts.id}}" method="POST">
-                        <label style="margin-top: 10%;" for="content">Update Post</label><br>
-                        <input type="text" id="content" name="content" value="{{posts.content}}">
-                        <!-- <textarea id="content" name="content" rows="5" cols="50" value="{{posts.content}}"></textarea><br> -->
-                        <input class="btn btn-success" type="submit" value="Update">
+                        <label style="margin-top:30%; margin-bottom: 5%; margin-left: 37%; font-weight: bold;" for="content"><important>Update Post</important></label><br>
+                        <textarea id="content" name="content" rows="5" cols="50">{{posts.content}}</textarea><br>
+                        <input style="margin-top: 5%;" class="btn btn-success" type="submit" value="Update">
                     </form>
                 </div>
             </div>

@@ -30,15 +30,25 @@
                 </tbody>
             {% endfor %}          
         </table>
-    </div><br><br><br>
+    </div><br><br>
 
+
+    <!-- <button type="button" onclick="show()">Create Post</button> -->
+
+
+    <!-- <div id="create-post" style="display: none;"> -->
     <div class="d-flex justify-content-md-center align-items-center">
         <form action="/profile" method="POST">
-            <label for="content">Create a post</label><br>
+            <label style="margin-bottom: 5%; margin-left: 37%; font-weight: bold;" for="content"><important>Create post</important></label><br>
             <textarea id="content" name="content" rows="5" cols="50"></textarea><br>
-            <input class="btn btn-success" type="submit" value="Send">
+            <input class="btn btn-success" type="submit" value="Create">
         </form>
     </div>
+    <!-- </div> -->
+    
+    <!-- <script>
+        let show = () => document.getElementById('create-post').style.display = "inline;"
+    </script> -->
           
 
     {% else %}

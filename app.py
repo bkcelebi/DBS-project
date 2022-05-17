@@ -6,7 +6,6 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
-from requests import post
 
 
 #creating the app and database

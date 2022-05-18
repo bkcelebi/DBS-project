@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Search</title>
+{% endblock %}
+
+{% block body %}
+    {% if users.posts | length < 1 %}
+
+        <h4 style="margin-top: 5%;" align="center">Could not find {{users.first_name}}'s post</h4><br>
+
+    {% else %}
+
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Owner</th>
+                        <th scope="col">Task</th>
+                        <th scope="col">Added</th>
+                    </tr>
+                </thead>
+                {% for user in users %}
+                    <tbody>
+                        <tr>
+                            <td scope="row">{{ user.first_name }}</td>
+                            <td scope="row">{{ user.posts.content }}</td>
+                            <td scope="row">{{ user.posts.date_created.date() }}</td>                  
+                        </tr>
+                    </tbody>
+                {% endfor %}          
+            </table>
+
+            <a class="btn btn-outline-dark" href="{{url_for('profile')}}">Create a post</a>
+
+        </div>
+
+    {% endif %}
+
+{% endblock %}

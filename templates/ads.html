@@ -8,7 +8,7 @@
 
     {% if current_user.is_authenticated %}
     <br>
-        <h1 class="d-flex justify-content-md-center align-items-center">Adverts</h1>
+        <h1 align="center">Adverts</h1>
     <br>
         {% if posts|length < 1 %}
             <h1>There is no post yet</h1> 
@@ -19,9 +19,29 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Owner</th>
-                            <th scope="col">Task</th>
-                            <th scope="col">Added</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Owner</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Task</th>
+                            <th scope="col">
+                                <span style="margin-left: 12%;">Added</span> 
+                                <form action="/ads" class="form-inline">                  
+                                    <select style="height: 31px; margin-right: 1%;" name="filter" id="filter">
+                                        {% if buttonValue ==  "Ascend" %}
+                                            <option value="Asc">{{buttonValue}}</option>
+                                            <option value="Desc">Descend</option>
+                                        {% elif buttonValue ==  "Descend" %}
+                                            <option value="Desc">{{buttonValue}}</option>
+                                            <option value="Asc">Ascend</option>
+                                        {% else %}
+                                            <option value="Asc">Ascend</option>
+                                            <option value="Desc">Descend</option>
+                                        {% endif %}   
+                                    </select>
+                                    <input 
+                                        class="btn btn-sm btn-outline-dark" 
+                                        type="submit" 
+                                        value="Filter"> 
+                                </form>                         
+                            </th>
                         </tr>
                     </thead>
                     {% for post in posts %}
@@ -45,22 +65,45 @@
         
     {% else %}
         <br>
-            <h1 class="d-flex justify-content-md-center align-items-center">Adverts</h1>
+            <h1 align="center">Adverts</h1>
         <br>
         {% if posts|length < 1 %}
-            <h1>There is no post yet</h1> 
+            <h3>There is no post yet</h3> 
             <a class="btn btn-primary" href="{{url_for('profile')}}">Create a post</a>
             
         {% else %}
             <div class="container">
+
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Owner</th>
-                            <th scope="col">Task</th>
-                            <th scope="col">Added</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Owner</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Task</th>
+                            <th scope="col">
+                                <span style="margin-left: 12%;">Added</span> 
+                                <form action="/ads" class="form-inline">                  
+                                    <select style="height: 31px; margin-right: 1%;" name="filter" id="filter">
+                                        {% if buttonValue ==  "Ascend" %}
+                                            <option value="Asc">{{buttonValue}}</option>
+                                            <option value="Desc">Descend</option>
+                                        {% elif buttonValue ==  "Descend" %}
+                                            <option value="Desc">{{buttonValue}}</option>
+                                            <option value="Asc">Ascend</option>
+                                        {% else %}
+                                            <option value="Asc">Ascend</option>
+                                            <option value="Desc">Descend</option>
+                                        {% endif %}   
+                                    </select>
+                                    <input 
+                                        class="btn btn-sm btn-outline-dark" 
+                                        type="submit" 
+                                        value="Filter"> 
+                                </form>                         
+                            </th>
                         </tr>
+
                     </thead>
+
                     {% for post in posts %}
                         <tbody>
                             <tr>

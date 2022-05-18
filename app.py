@@ -167,16 +167,58 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/ads', methods=['GET', 'POST'])
+@app.route('/ads', methods=['GET'])
 # @login_required
 def ads():
+    buttonValue = ""
 
-    posts = Post.query.order_by(Post.date_created).all() 
+    if request.args.get('filter'):
+
+        if request.args.get('filter') == 'Asc':
+            
+            buttonValue = "Ascend"    
+            posts = Post.query.order_by(Post.date_created.asc()).all() 
+            
+            return render_template(
+                'ads.html', 
+                posts=posts,
+                buttonValue=buttonValue)
+
+        elif request.args.get('filter') == 'Desc':
+            
+            buttonValue = "Descend"
+            posts = Post.query.order_by(Post.date_created.desc()).all() 
+            
+            return render_template(
+                'ads.html', 
+                posts=posts,
+                buttonValue=buttonValue)
+
+    else:
+
+        posts = Post.query.order_by(Post.date_created.asc()).all() 
+        
+        return render_template(
+            'ads.html', 
+            posts=posts,
+            buttonValue=buttonValue)
+
+
+@app.route('/search', methods=['GET'])
+def search():
+
+    if request.args.get('search'):
+        search = request.args.get('search')
+        users = User.query.filter(User.first_name.contains(search))
+
+        return render_template(
+            'search.html', 
+            users=users)
+
+    users = User.query.all()
     return render_template(
-        'ads.html', 
-        posts=posts
-        )
-
+        'search.html',
+        users=users)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

@@ -1,6 +1,7 @@
 
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 # from requests import request
 from flask_bcrypt import Bcrypt
@@ -208,11 +209,12 @@ def ads():
 def search():
 
     search = request.args.get('search')
-    posts = Post.query.order_by(Post.date_created.desc()).all() 
+    result = db.session.query(Post, User).join(User). \
+        filter(User.first_name.ilike(f'%{search}%')).all()
             
     return render_template(
         'search.html', 
-        posts=posts,
+        result=result,
         search=search)
 
 

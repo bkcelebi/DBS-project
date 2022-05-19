@@ -10,8 +10,11 @@
         <br>
             <h1 align="center">Adverts</h1>
         <br>
-        {% if search.lower() == "" %}
+        {% if search == "" %}
             <h3 style="margin-top: 5%;" align="center">Try again?</h3> 
+
+        {% elif result == [] %}
+            <h3>Could'nt find {{search}}'s post!</h3>
             
         {% else %}
             <div class="container">
@@ -25,16 +28,14 @@
                         </tr>
 
                     </thead>
-                    {% for post in posts %}
-                        {% if search.lower() == post.user.first_name.lower() %}                       
-                            <tbody>
-                                <tr>
-                                    <td scope="row">{{ post.user.first_name }}</td>
-                                    <td scope="row">{{ post.content }}</td>
-                                    <td scope="row">{{ post.date_created.date() }}</td>                  
-                                </tr>
-                            </tbody>
-                        {% endif %}
+                    {% for post, user in result %}
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{ user.first_name }}</td>
+                                <td scope="row">{{ post.content }}</td>
+                                <td scope="row">{{ post.date_created.date() }}</td>                  
+                            </tr>
+                        </tbody>
                     {% endfor %}
             
                 </table>
@@ -45,8 +46,11 @@
         <br>
             <h1 align="center">Adverts</h1>
         <br>
-        {% if search.lower() == "" %}
+        {% if search == "" %}
             <h3 style="margin-top: 5%;" align="center">Try again?</h3> 
+        
+        {% elif result == [] %}
+            <h3>Could'nt find {{search}}'s post!</h3>
             
         {% else %}
             <div class="container">
@@ -60,16 +64,14 @@
                         </tr>
 
                     </thead>
-                    {% for post in posts %}
-                        {% if search.lower() == post.user.first_name.lower() %}                       
-                            <tbody>
-                                <tr>
-                                    <td scope="row">{{ post.user.first_name }}</td>
-                                    <td scope="row">{{ post.content }}</td>
-                                    <td scope="row">{{ post.date_created.date() }}</td>                  
-                                </tr>
-                            </tbody>
-                        {% endif %}
+                    {% for post, user in result %}
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{ user.first_name }}</td>
+                                <td scope="row">{{ post.content }}</td>
+                                <td scope="row">{{ post.date_created.date() }}</td>                  
+                            </tr>
+                        </tbody>
                     {% endfor %}
             
                 </table>

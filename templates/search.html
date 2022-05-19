@@ -11,10 +11,10 @@
             <h1 align="center">Adverts</h1>
         <br>
         {% if search == "" %}
-            <h3 style="margin-top: 5%;" align="center">Try again?</h3> 
+            <h3 style="margin-top: 5%;" align="center">That was not so decriptive</h3> 
 
         {% elif result == [] %}
-            <h3>Could'nt find {{search}}'s post!</h3>
+            <h3 style="margin-top: 5%;" align="center">Could'nt find {{search}}'s post!</h3>
             
         {% else %}
             <div class="container">
@@ -47,10 +47,10 @@
             <h1 align="center">Adverts</h1>
         <br>
         {% if search == "" %}
-            <h3 style="margin-top: 5%;" align="center">Try again?</h3> 
+            <h3 style="margin-top: 5%;" align="center">That was not so decriptive</h3> 
         
         {% elif result == [] %}
-            <h3>Could'nt find {{search}}'s post!</h3>
+            <h3 style="margin-top: 5%;" align="center">Could'nt find {{search}}'s post!</h3>
             
         {% else %}
             <div class="container">
@@ -73,7 +73,6 @@
                             </tr>
                         </tbody>
                     {% endfor %}
-            
                 </table>
             </div>
         {% endif %}

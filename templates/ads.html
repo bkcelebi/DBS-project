@@ -11,8 +11,9 @@
         <h1 align="center">Adverts</h1>
     <br>
         {% if posts|length < 1 %}
-            <h1>There is no post yet</h1> 
-            <a class="btn btn-primary" href="{{url_for('profile')}}">Create a post</a>
+            <div class="container">
+                <h3 style="margin-top: 5%;" align="center">There is no post yet. <a href="{{url_for('profile')}}">Create one?</a></h3>     
+            </div>
             
         {% else %}
             <div class="container">
@@ -68,8 +69,9 @@
             <h1 align="center">Adverts</h1>
         <br>
         {% if posts|length < 1 %}
-            <h3>There is no post yet</h3> 
-            <a class="btn btn-primary" href="{{url_for('profile')}}">Create a post</a>
+            <div class="container">
+                <h3 style="margin-top: 5%;" align="center">There is no post yet. <a href="{{url_for('profile')}}">Create one?</a></h3>     
+            </div>
             
         {% else %}
             <div class="container">

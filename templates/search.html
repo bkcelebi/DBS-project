@@ -18,7 +18,12 @@
             
         {% else %}
             <div class="container">
-
+                
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url_for('ads')}}">Tasks</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{search}}</li>
+                </ol>
+                
                 <table class="table table-striped">
                     <thead>
                         <tr>

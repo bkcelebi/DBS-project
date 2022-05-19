@@ -1,40 +1,80 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Search</title>
+    <title>Adverts</title>
 {% endblock %}
 
 {% block body %}
-    {% if users.posts | length < 1 %}
 
-        <h4 style="margin-top: 5%;" align="center">Could not find {{users.first_name}}'s post</h4><br>
+    {% if current_user.is_authenticated %}
+        <br>
+            <h1 align="center">Adverts</h1>
+        <br>
+        {% if search.lower() == "" %}
+            <h3 style="margin-top: 5%;" align="center">Try again?</h3> 
+            
+        {% else %}
+            <div class="container">
 
-    {% else %}
-
-        <div class="container">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Owner</th>
-                        <th scope="col">Task</th>
-                        <th scope="col">Added</th>
-                    </tr>
-                </thead>
-                {% for user in users %}
-                    <tbody>
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td scope="row">{{ user.first_name }}</td>
-                            <td scope="row">{{ user.posts.content }}</td>
-                            <td scope="row">{{ user.posts.date_created.date() }}</td>                  
+                            <th scope="col">Owner</th>
+                            <th scope="col">Task</th>
+                            <th scope="col">Added</th>
                         </tr>
-                    </tbody>
-                {% endfor %}          
-            </table>
 
-            <a class="btn btn-outline-dark" href="{{url_for('profile')}}">Create a post</a>
+                    </thead>
+                    {% for post in posts %}
+                        {% if search.lower() == post.user.first_name.lower() %}                       
+                            <tbody>
+                                <tr>
+                                    <td scope="row">{{ post.user.first_name }}</td>
+                                    <td scope="row">{{ post.content }}</td>
+                                    <td scope="row">{{ post.date_created.date() }}</td>                  
+                                </tr>
+                            </tbody>
+                        {% endif %}
+                    {% endfor %}
+            
+                </table>
+            </div>
+        {% endif %}
+        
+    {% else %}
+        <br>
+            <h1 align="center">Adverts</h1>
+        <br>
+        {% if search.lower() == "" %}
+            <h3 style="margin-top: 5%;" align="center">Try again?</h3> 
+            
+        {% else %}
+            <div class="container">
 
-        </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Owner</th>
+                            <th scope="col">Task</th>
+                            <th scope="col">Added</th>
+                        </tr>
 
+                    </thead>
+                    {% for post in posts %}
+                        {% if search.lower() == post.user.first_name.lower() %}                       
+                            <tbody>
+                                <tr>
+                                    <td scope="row">{{ post.user.first_name }}</td>
+                                    <td scope="row">{{ post.content }}</td>
+                                    <td scope="row">{{ post.date_created.date() }}</td>                  
+                                </tr>
+                            </tbody>
+                        {% endif %}
+                    {% endfor %}
+            
+                </table>
+            </div>
+        {% endif %}
     {% endif %}
-
+    
 {% endblock %}

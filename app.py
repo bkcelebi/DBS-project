@@ -196,7 +196,7 @@ def ads():
 
     else:
 
-        posts = Post.query.order_by(Post.date_created.asc()).all() 
+        posts = Post.query.order_by(Post.date_created).all() 
         
         return render_template(
             'ads.html', 
@@ -207,18 +207,13 @@ def ads():
 @app.route('/search', methods=['GET'])
 def search():
 
-    if request.args.get('search'):
-        search = request.args.get('search')
-        users = User.query.filter(User.first_name.contains(search))
-
-        return render_template(
-            'search.html', 
-            users=users)
-
-    users = User.query.all()
+    search = request.args.get('search')
+    posts = Post.query.order_by(Post.date_created.desc()).all() 
+            
     return render_template(
-        'search.html',
-        users=users)
+        'search.html', 
+        posts=posts,
+        search=search)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

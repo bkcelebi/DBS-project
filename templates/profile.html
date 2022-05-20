@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Create Post</title>
+    {% if current_user.is_authenticated %}
+        <title>{{current_user.first_name}}'s Profile</title>
+    {% else %}
+        <title>Profile</title>
+    {% endif %}
 {% endblock %}
 
 {% block body %}

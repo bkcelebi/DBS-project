@@ -5,33 +5,45 @@
 {% endblock %}
 
 {% block body %}
-<div>
 
+<!-- I got the style part from https://stackoverflow.com/questions/65352606/background-image-in-bootstrap-css-does-not-cover-full-screen -->
 
     {% if current_user.is_authenticated %}
 
-        <div class="card bg-dark text-dark">
-            <img src="https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" class="card-img" alt="...">
-            <div style="margin-left: 350px; margin-top:150px;" class="card-img-overlay">
-                <h3 class="card-title">Welcome to DB {{current_user.first_name}}</h3>
-                <p class="card-text"><i>Lets have a look at tasks</i></p>
+        <div 
+        style=" 
+        margin-top: -3%;
+        background: url('https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
+        position: center;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;">
+            <div style="margin-left: 15%; margin-top:10%;" class="card-img-overlay">
+                <h3 class="card-title">Welcome to TaskMate, {{current_user.first_name}}!</h3>
+                <p class="card-text"><i>See all tasks.</i></p>
                 <a class="btn btn-outline-dark" href="{{url_for('ads')}}">Search</a>
-            </div>         
+            </div>  
         </div>
 
     {% else %}
 
-        <div class="card bg-dark text-dark">
-            <img src="https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" class="card-img" alt="...">
+        <div 
+        style=" 
+        margin-top: -3%;
+        background: url('https://images.pexels.com/photos/4359106/pexels-photo-4359106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
+        position: center;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;">
             <div style="margin-left: 15%; margin-top:10%;" class="card-img-overlay">
-                <h3 class="card-title">Welcome to DB</h3>
-                <p class="card-text"><i>Let's have a look at tasks</i></p>
+                <h3 class="card-title">Welcome to TaskMate</h3>
+                <p class="card-text"><i>See all tasks.</i></p>
                 <a class="btn btn-outline-dark" href="{{url_for('ads')}}">Search</a>
-            </div>         
-         </div>
+            </div>  
+        </div>
 
     {% endif %}
 
 
-</div>
+
 {% endblock %}

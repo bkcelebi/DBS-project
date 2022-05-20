@@ -1,8 +1,7 @@
-
+#importing the necessary packages and libraries for the app
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-# from requests import request
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
@@ -16,7 +15,7 @@ bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] = 'secretkey'
 
-
+#creating the login manager
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
@@ -61,14 +60,16 @@ class Post(db.Model):
     def __repr__(self):
         return f'<Post {self.id}>'
 
-
+#home page / reception page
 @app.route('/')
 def index():
     return render_template('index.html')
 
+#Signup page to collect data to create a user profile
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 
+    #getting the data from the form in the fronend through post request
     if request.method == 'POST':
         first_name = request.form['fname']
         last_name = request.form['lname']
@@ -79,6 +80,7 @@ def signup():
         gender = request.form['gender']
         location = request.form['location']
 
+        #validating the data before pushing them to database to create a user profile
         if len(first_name) > 50:
             flash('First name must be less than 50 characters.', category='error')
         elif len(first_name) < 2:
@@ -102,13 +104,14 @@ def signup():
         elif location == "":
             flash('Location must be filled', category='error')
         else:
-
+            #checking if the email is used already
             existing_email = User.query.filter_by(
                     email=email).first()
             if existing_email:
                 flash("This email already exists.", category='error')
                 return redirect(url_for('signup'))
 
+            #if email does not exist hashing the pw and creating the user profile
             else:    
                 hashed_pw = bcrypt.generate_password_hash(password)
 
@@ -123,7 +126,7 @@ def signup():
 
         flash('Account not created!', category='error')
         return redirect(url_for('signup'))
-                    
+    #if the request is get, just showing the template to the user           
     else:
         return render_template('signup.html')
 
@@ -176,7 +179,7 @@ def ads():
 
         if request.args.get('filter') == 'Asc':
             
-            buttonValue = "Ascend"    
+            buttonValue = "Ascending"    
             posts = Post.query.order_by(Post.date_created.asc()).all() 
             
             return render_template(
@@ -186,7 +189,7 @@ def ads():
 
         elif request.args.get('filter') == 'Desc':
             
-            buttonValue = "Descend"
+            buttonValue = "Descending"
             posts = Post.query.order_by(Post.date_created.desc()).all() 
             
             return render_template(

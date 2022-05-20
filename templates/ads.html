@@ -8,11 +8,11 @@
 
     {% if current_user.is_authenticated %}
     <br>
-        <h1 align="center">Adverts</h1>
+        <h1 align="center">Tasks</h1>
     <br>
         {% if posts|length < 1 %}
             <div class="container">
-                <h3 style="margin-top: 5%;" align="center">There is no post yet. <a href="{{url_for('profile')}}">Create one?</a></h3>     
+                <h5 style="margin-top: 5%;" align="center">There are no tasks yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
             </div>
             
         {% else %}
@@ -20,10 +20,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th style="padding-bottom: 2.5%;" scope="col">Owner</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Author</th>
                             <th style="padding-bottom: 2.5%;" scope="col">Task</th>
                             <th scope="col">
-                                <span style="margin-left: 12%;">Added</span> 
+                                <span style="margin-left: 5%;">Date created</span> 
                                 <form action="/ads" class="form-inline">                  
                                     <select style="height: 31px; margin-right: 1%;" name="filter" id="filter">
                                         {% if buttonValue ==  "Ascend" %}
@@ -66,11 +66,11 @@
         
     {% else %}
         <br>
-            <h1 align="center">Adverts</h1>
+            <h1 align="center">Tasks</h1>
         <br>
         {% if posts|length < 1 %}
             <div class="container">
-                <h3 style="margin-top: 5%;" align="center">There is no post yet. <a href="{{url_for('profile')}}">Create one?</a></h3>     
+                <h5 style="margin-top: 5%;" align="center">There are no tasks yet. <a href="{{url_for('profile')}}">Create now</a></h5>     
             </div>
             
         {% else %}
@@ -79,21 +79,21 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th style="padding-bottom: 2.5%;" scope="col">Owner</th>
+                            <th style="padding-bottom: 2.5%;" scope="col">Author</th>
                             <th style="padding-bottom: 2.5%;" scope="col">Task</th>
                             <th scope="col">
-                                <span style="margin-left: 12%;">Added</span> 
+                                <span style="margin-left: 5%;">Date created</span> 
                                 <form action="/ads" class="form-inline">                  
                                     <select style="height: 31px; margin-right: 1%;" name="filter" id="filter">
-                                        {% if buttonValue ==  "Ascend" %}
+                                        {% if buttonValue ==  "Ascending" %}
                                             <option value="Asc">{{buttonValue}}</option>
-                                            <option value="Desc">Descend</option>
-                                        {% elif buttonValue ==  "Descend" %}
+                                            <option value="Desc">Descending</option>
+                                        {% elif buttonValue ==  "Descending" %}
                                             <option value="Desc">{{buttonValue}}</option>
-                                            <option value="Asc">Ascend</option>
+                                            <option value="Asc">Ascending</option>
                                         {% else %}
-                                            <option value="Asc">Ascend</option>
-                                            <option value="Desc">Descend</option>
+                                            <option value="Asc">Ascending</option>
+                                            <option value="Desc">Descending</option>
                                         {% endif %}   
                                     </select>
                                     <input 

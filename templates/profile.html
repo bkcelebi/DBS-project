@@ -9,11 +9,12 @@
     {% if current_user.is_authenticated %}
     <br>
     <div class="container">
+        <h3 align="center">My Tasks</h3><br>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Task</th>
-                    <th scope="col">Added</th>
+                    <th scope="col">Tasks</th>
+                    <th scope="col">Date created</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -35,7 +36,7 @@
         class="btn btn-outline-dark" 
         type="button" onclick="document.getElementById('create-post').style.display = ''"
         >
-        Create New Post
+        Create New Task
     </button>
     </div><br><br>
 
@@ -43,7 +44,7 @@
     <div id="create-post" style="display: none;">
         <div class="d-flex justify-content-md-center align-items-center">
             <form action="/profile" method="POST">
-                <label style="margin-bottom: 5%; margin-left: 37%; font-weight: bold;" for="content"><important>Create post</important></label><br>
+                <label style="margin-bottom: 5%; margin-left: 37%; font-weight: bold;" for="content"><important>Create task</important></label><br>
                 <textarea id="content" name="content" rows="5" cols="50"></textarea><br>
                 <input class="btn btn-outline-success" type="submit" value="Submit">
             </form>
@@ -53,7 +54,7 @@
     {% else %}
         
         <div class="container">
-            <h4 align="center" style="margin-top: 3%;">Trying to access your profile? Please log in!</h4><br>
+            <h4 align="center" style="margin-top: 3%;">Trying to access your profile? Sign in now!</h4><br>
             <div style="margin-top: 5%;" class="d-flex justify-content-center align-items-center">
                 <div class="card" style="width: 20rem;">
                     <div class="card-body">

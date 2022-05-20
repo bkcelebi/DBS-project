@@ -9,7 +9,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{url_for('index')}}">DB</a>
+            <a class="navbar-brand" href="{{url_for('index')}}">TM</a>
             <button 
               class="navbar-toggler" 
               type="button" 
@@ -29,7 +29,7 @@
                       <a class="nav-link" href="{{url_for('profile')}}">Profile</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('ads')}}">Ads</a>
+                      <a class="nav-link" href="{{url_for('ads')}}">Tasks</a>
                     </li>
                 </ul>
 
@@ -56,7 +56,7 @@
 
                     <li class="nav-item">
                         <a class="btn btn-outline-success" href="{{url_for('profile')}}">{{current_user.first_name}}</a>
-                        <a class="btn btn-outline-secondary" href="{{url_for('logout')}}">Log Out</a>
+                        <a class="btn btn-outline-secondary" href="{{url_for('logout')}}">Sign Out</a>
                     </li>   
 
                     {% else %}

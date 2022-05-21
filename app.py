@@ -135,24 +135,30 @@ def signup():
 def login():
 
     if request.method == 'POST':
+        #getting the credentials 
         email = request.form['mail']
         password = request.form['pwd']
         user = User.query.filter_by(email=email).first()
 
+        #validating the input
         if email == '':
             flash('Please enter your Email', category='error')
         elif password == '':
             flash('Please enter your Password', category='error')
         else:
+            #if user exist
             if user:
+                #checking if the pw user entered and the 
+                #hashed ones are matching and if so log in user
                 if bcrypt.check_password_hash(user.password, password):
                     login_user(user)
                     flash('Successfully signed in', category='success')
                     return redirect(url_for('profile'))
+                #else reject login request
                 else:
                     flash('Incorrect Email or Password', category='error')
                     return redirect(url_for('login'))
-
+            #if user does not exist
             else:
                 flash("This user does not exist", category='error')
                 return redirect(url_for('login'))
@@ -162,7 +168,7 @@ def login():
     else:
         return render_template('login.html')
 
-
+#logout user
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():

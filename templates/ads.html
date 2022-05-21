@@ -26,22 +26,22 @@
                                 <span style="margin-left: 5%;">Date created</span> 
                                 <form action="/ads" class="form-inline">                  
                                     <select style="height: 31px; margin-right: 1%;" name="filter" id="filter">
-                                        {% if buttonValue ==  "Ascend" %}
+                                        {% if buttonValue ==  "Ascending" %}
                                             <option value="Asc">{{buttonValue}}</option>
-                                            <option value="Desc">Descend</option>
-                                        {% elif buttonValue ==  "Descend" %}
+                                            <option value="Desc">Descending</option>
+                                        {% elif buttonValue ==  "Descending" %}
                                             <option value="Desc">{{buttonValue}}</option>
-                                            <option value="Asc">Ascend</option>
+                                            <option value="Asc">Ascending</option>
                                         {% else %}
-                                            <option value="Asc">Ascend</option>
-                                            <option value="Desc">Descend</option>
+                                            <option value="Asc">Ascending</option>
+                                            <option value="Desc">Descending</option>
                                         {% endif %}   
                                     </select>
                                     <input 
                                         class="btn btn-sm btn-outline-dark" 
                                         type="submit" 
                                         value="Filter"> 
-                                </form>                         
+                                </form>                          
                             </th>
                         </tr>
                     </thead>

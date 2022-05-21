@@ -5,6 +5,12 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
+#In this app, Flask documentation, sqlalchemy documentation and 
+#bcrypt documentations are used.
+#https://flask.palletsprojects.com/en/2.1.x/ (Flask doc)
+#https://pypi.org/project/bcrypt/ (bcrypt doc)
+#https://docs.sqlalchemy.org/en/14/ (sqlalchemy doc)
+
 
 
 #creating the app and database
@@ -112,7 +118,8 @@ def signup():
                 return redirect(url_for('signup'))
 
             #if email does not exist hashing the pw and creating the user profile
-            else:    
+            else:
+                #4 rows of code below is from https://www.youtube.com/watch?v=71EU8gnZqZQ&t=1442s
                 hashed_pw = bcrypt.generate_password_hash(password)
 
                 new_user = User(email=email, first_name=first_name, 
@@ -180,9 +187,9 @@ def logout():
 # @login_required
 def ads():
     buttonValue = ""
-
+    #if filter true
     if request.args.get('filter'):
-
+        #asc
         if request.args.get('filter') == 'Asc':
             
             buttonValue = "Ascending"    
@@ -192,7 +199,7 @@ def ads():
                 'ads.html', 
                 posts=posts,
                 buttonValue=buttonValue)
-
+        #desc
         elif request.args.get('filter') == 'Desc':
             
             buttonValue = "Descending"
@@ -215,7 +222,7 @@ def ads():
 
 @app.route('/search', methods=['GET'])
 def search():
-
+    #create join on user table and filter by search param insensitively 
     search = request.args.get('search')
     result = db.session.query(Post, User).join(User). \
         filter(User.first_name.ilike(f'%{search}%')).all()
@@ -233,14 +240,17 @@ def profile():
     if request.method == 'POST':
         content = request.form['content']
 
+        #if the content is empty
         if len(content) < 1:
             flash("Task too short!", category='error')
             
         else:
+            #passing required info to create a new task
             new_post = Post(
                 content=content, 
                 user_id=current_user.id)
-        
+
+            #creating the task
             db.session.add(new_post)
             db.session.commit()
             flash("Task created successfully", category='success')
@@ -259,12 +269,13 @@ def update(id):
     posts = Post.query.get_or_404(id)
 
     if request.method == 'POST':
-
+        #if input is left blank
         if request.form['content'].strip() == '':
             flash('Post cannot be blank', category='error')
             return redirect(url_for('profile'))
 
         elif len(request.form['content']) > 0:
+            #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
             posts.content = request.form['content']
             db.session.commit()
             flash('Post edited', category='success')
@@ -286,6 +297,7 @@ def delete(id):
     posts_to_delete = Post.query.get_or_404(id)
 
     if posts_to_delete:
+        #3 rows of code below is from https://www.youtube.com/watch?v=Z1RJmh_OqeA
         db.session.delete(posts_to_delete)
         db.session.commit()
         flash('Post deleted', category='success')
